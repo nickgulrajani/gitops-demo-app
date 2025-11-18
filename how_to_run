@@ -1,0 +1,12 @@
+
+start.sh
+
+synch the repo with the UI 
+
+check ...
+
+edit deployment.yaml and change the replica count 
+
+kubectl get deploy hello
+kubectl get pods -l app=hello
+
