@@ -1,12 +1,14 @@
+1️⃣ Start fresh
+./reset_gitops_demo.sh
+./start.sh
 
-start.sh
+2️⃣ Run your GitOps demo
+./git_ops_demo_flow.sh
 
-synch the repo with the UI 
+3️⃣ Watch the Argo UI
 
-check ...
+Scaling (Git-based)
 
-edit deployment.yaml and change the replica count 
+Drift detection + self-heal
 
-kubectl get deploy hello
-kubectl get pods -l app=hello
-
+Version rollout via Git commit
