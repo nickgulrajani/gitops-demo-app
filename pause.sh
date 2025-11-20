@@ -1,23 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-CLUSTER_NAME="gitops-demo"
+echo "=== Pausing GitOps Demo ==="
 
-echo "=== Pausing GitOps demo ==="
+# Delete the Argo CD application (but leave Argo itself installed)
+echo "[STEP] Deleting Argo CD application 'hello-gitops'..."
+kubectl delete application hello-gitops -n argocd --ignore-not-found=true
 
-# Kill port-forward if running
-echo "[STEP] Stopping any Argo CD port-forward sessions..."
-PF_PID=$(lsof -ti:9999 || true)
-if [ -n "$PF_PID" ]; then
-  echo "Killing port-forward process PID: $PF_PID"
-  kill -9 "$PF_PID"
-else
-  echo "No port-forward process running on port 9999."
-fi
+# Delete the hello workload from the default namespace
+echo "[STEP] Deleting deployed hello app resources..."
+kubectl delete deploy hello -n default --ignore-not-found=true
+kubectl delete svc hello -n default --ignore-not-found=true
 
-# Delete KinD cluster
-echo "[STEP] Deleting KinD cluster ($CLUSTER_NAME)..."
-kind delete cluster --name "${CLUSTER_NAME}" || true
-
-echo "=== Demo paused successfully ==="
+echo "=== GitOps demo paused ==="
+echo "Cluster is clean. You can re-run start_demo.sh anytime."
 
